@@ -2,39 +2,29 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import AnimatedLogo from "./components/AnimatedLogo";
-// import Header from "./components/Header";  <-- REMOVE THIS
-// import Footer from "./components/Footer";  <-- REMOVE THIS
 
 export default function Home() {
   const [introAnimationComplete, setIntroAnimationComplete] = useState(false);
-  const [isClient, setIsClient] = useState(false);
   const mainContentRef = useRef<HTMLDivElement>(null);
 
-    const handleAnimationEnd = () => {
-      // Delay showing the main content *after* the logo fade-out
-      setTimeout(() => {
-        setIntroAnimationComplete(true);
-      }, 500); // 500ms delay - match the logo fade-out duration
-    };
-
+  const handleAnimationEnd = () => {
+    setTimeout(() => {
+      setIntroAnimationComplete(true);
+    }, 500); // 500ms delay - after logo fade-out
+  };
 
   useEffect(() => {
-    // Remove the timeout that was directly setting introAnimationComplete
-    // The animation end is now handled by the callback
-    setIsClient(true);
-
     const fadeInAnimation = mainContentRef.current?.animate(
       [{ opacity: 0 }, { opacity: 1 }],
       {
         duration: 1000,
         easing: "ease-in-out",
         fill: "forwards",
-        delay: 3000, // Adjust if necessary
+        // delay: 3000,  <-- REMOVE THIS DELAY, delay handled above
       }
     );
 
     return () => {
-
       if (fadeInAnimation) {
         fadeInAnimation.cancel();
       }
@@ -43,16 +33,17 @@ export default function Home() {
 
   return (
     <>
-      {!introAnimationComplete && (
-        <div className="fixed top-0 left-0 w-full h-full bg-black flex justify-center items-center z-50">
-           <AnimatedLogo onAnimationEnd={handleAnimationEnd} />
-        </div>
-      )}
-      {introAnimationComplete && (
-        <>
-          {/* <Header />  <-- REMOVE THIS */}
+      <div className="relative">
+        {!introAnimationComplete && (
+          <div className="fixed top-0 left-0 w-full h-full bg-black flex justify-center items-center z-50">
+            <AnimatedLogo onAnimationEnd={handleAnimationEnd} />
+          </div>
+        )}
+        {/* <Header /> */}
           <main
-            className="flex flex-col items-center justify-center min-h-screen overflow-hidden px-4 md:px-16"
+            className={`flex flex-col items-center justify-center min-h-screen overflow-hidden px-4 md:px-16 pt-16 md:pt-20 transition-opacity duration-1000 ${
+              introAnimationComplete ? "opacity-100" : "opacity-0"
+            }`}
             ref={mainContentRef}
           >
             {/* Hero Section */}
@@ -105,9 +96,9 @@ export default function Home() {
               </button>
             </section>
           </main>
-          {/* <Footer />  <-- REMOVE THIS */}
-        </>
-      )}
+          {/* <Footer /> */}
+      </div>
+
     </>
   );
 }

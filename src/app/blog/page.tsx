@@ -8,7 +8,7 @@ export default function Blog() {
           Blog - Coming Soon!
         </h1>
         <p className="text-gray-400 text-lg md:text-xl">
-          We're working hard to bring you exciting content. Stay tuned!
+          We&apos;re working hard to bring you exciting content. Stay tuned!
         </p>
       </div>
     </div>
