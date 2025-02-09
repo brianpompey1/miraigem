@@ -1,21 +1,22 @@
+/* app/globals.css */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* Remove the .active-link styles */
+/* @layer components {
+  .active-link {
+    @apply text-custom-tan underline;
   }
+} */
+.social-icon-link:hover img {
+  filter: brightness(0) saturate(100%) invert(75%) sepia(11%) saturate(1434%) hue-rotate(355deg) brightness(90%) contrast(88%);
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Inter", sans-serif;
+  background-color: #000000;
+  color: #ffffff;
 }
