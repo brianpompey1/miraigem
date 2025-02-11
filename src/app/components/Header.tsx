@@ -67,9 +67,9 @@ const Header = () => {
             About Us
           </Link>
           <MobileDropdownMenu /> {/* Use the new component */}
-          <Link href="/work-with-us" className="text-white hover:text-amber-400 text-xl" onClick={toggleMobileMenu}>
+          {/* <Link href="/work-with-us" className="text-white hover:text-amber-400 text-xl" onClick={toggleMobileMenu}>
             Work With Us
-          </Link>
+          </Link> */}
           <Link href="/blog" className="text-white hover:text-amber-400 text-xl" onClick={toggleMobileMenu}>
             Blog
           </Link>
