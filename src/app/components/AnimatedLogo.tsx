@@ -1,11 +1,10 @@
-// app/components/AnimatedLogo.tsx
-"use client";
-import { useEffect, useRef, useState } from "react";
+// src/components/AnimatedLogo.tsx
+"use client"
+import React, { useEffect, useRef, useState } from "react";
 
 const AnimatedLogo = ({ onAnimationEnd }: { onAnimationEnd?: () => void }) => {
   const pathRef = useRef<SVGPathElement | null>(null);
   const [animationComplete, setAnimationComplete] = useState(false);
-  const [fadeOut, setFadeOut] = useState(false); // Add fadeOut state
 
   useEffect(() => {
     const path = pathRef.current;
@@ -18,6 +17,7 @@ const AnimatedLogo = ({ onAnimationEnd }: { onAnimationEnd?: () => void }) => {
     path.style.strokeWidth = "2";
     path.style.fillOpacity = "0";
 
+    // Drawing animation (1.5 seconds)
     const drawAnimation = path.animate(
       [
         { strokeDashoffset: length, fillOpacity: 0, strokeWidth: 2 },
@@ -25,9 +25,20 @@ const AnimatedLogo = ({ onAnimationEnd }: { onAnimationEnd?: () => void }) => {
         { strokeDashoffset: 0, fillOpacity: 1, strokeWidth: 0 },
       ],
       {
-        duration: 2000,
+        duration: 1500, // 1.  5 seconds
         easing: "ease-in-out",
         fill: "forwards",
+      }
+    );
+
+    // Fade-out animation (0.5 seconds), starts *after* drawing
+    const fadeOutAnimation = path.animate(
+      [{ opacity: 1 }, { opacity: 0 }],
+      {
+        duration: 500, // 0.5 seconds
+        easing: "ease-in-out",
+        fill: "forwards",
+        delay: 1500, // Start *after* the drawing animation (1.5s)
       }
     );
 
@@ -35,24 +46,22 @@ const AnimatedLogo = ({ onAnimationEnd }: { onAnimationEnd?: () => void }) => {
       setAnimationComplete(true);
       path.style.fillOpacity = "1";
       path.style.strokeWidth = "0";
-      // Start fade-out after a short delay *after* the drawing is complete
-      setTimeout(() => {
-        setFadeOut(true);
-        onAnimationEnd?.(); // Call the callback after fade-out starts
-      }, 500); // 500ms delay before fade-out - adjust as needed
     };
+
+     fadeOutAnimation.onfinish = () => {
+         onAnimationEnd?.(); // Call the callback *after* fade-out
+     }
+
 
     return () => {
       drawAnimation.cancel();
+      fadeOutAnimation.cancel(); // Clean up both animations
     };
-  }, [onAnimationEnd]);
+  }, [onAnimationEnd]); // Depend on onAnimationEnd
 
   return (
     <svg
-      // Add a class based on the fadeOut state
-      className={`w-[400px] transition-opacity duration-500 ${
-        fadeOut ? "opacity-0" : "opacity-100"
-      }`}
+      className={`w-[400px]`} // Removed animation class (handled by Web Animations API)
       viewBox="0 0 1920 1080"
       xmlns="http://www.w3.org/2000/svg"
     >

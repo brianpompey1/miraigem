@@ -5,12 +5,14 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Remove the .active-link styles */
-/* @layer components {
-  .active-link {
-    @apply text-custom-tan underline;
-  }
-} */
+/* Initially hide the animation container */
+.intro-animation {
+  visibility: visible;
+  /* Initially visible */
+  animation: intro-display 2.5s forwards;
+  /* Total animation time */
+}
+
 .social-icon-link:hover img {
   filter: brightness(0) saturate(100%) invert(75%) sepia(11%) saturate(1434%) hue-rotate(355deg) brightness(90%) contrast(88%);
 }
@@ -19,4 +21,18 @@ body {
   font-family: "Inter", sans-serif;
   background-color: #000000;
   color: #ffffff;
+}
+
+@keyframes intro-display {
+  0% {
+    visibility: visible;
+  }
+
+  99% {
+    visibility: visible;
+  }
+
+  100% {
+    visibility: hidden;
+  }
 }

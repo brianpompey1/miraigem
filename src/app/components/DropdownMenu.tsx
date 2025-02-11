@@ -1,95 +1,87 @@
+// app/components/Header.tsx
 "use client";
 import Link from 'next/link';
-import { useState, useRef, useEffect } from 'react';
-import { ChevronDownIcon } from '@heroicons/react/24/solid';
-// import { usePathname } from 'next/navigation'; // No longer needed.
+import Image from 'next/image';
+// import DropdownMenu from './DropdownMenu'; // REMOVE THIS
+import { useState } from 'react';
+import MobileDropdownMenu from './MobileDropdownMenu';
 
-const DropdownMenu = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
-  // const pathname = usePathname(); // No longer needed
+const Header = () => {
+   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setIsOpen(false);
-      }
-    };
-
-    if (isOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
-    }
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [isOpen]);
-
-  const toggleDropdown = () => {
-    setIsOpen(!isOpen);
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
   return (
-    <div className="relative inline-block text-left" ref={dropdownRef}>
-      <div>
-        <button
-          type="button"
-          className="text-white hover:text-amber-400 inline-flex justify-center items-center w-full"
-          onClick={toggleDropdown}
-        >
-          Our Services
-          <ChevronDownIcon className="h-5 w-5 ml-1" />
-        </button>
-      </div>
+    <header className="bg-black p-4 flex items-center justify-between relative z-30">
+      <Link href="/">
+        <Image
+          src="/mirai-small-logo.svg"
+          alt="MIRAI Logo"
+          width={100}
+          height={50}
+          className="cursor-pointer z-40"
+        />
+      </Link>
 
-      {isOpen && (
-        <div
-          className="origin-top-right absolute left-0 mt-2 w-56 rounded-md shadow-lg bg-black ring-1 ring-white ring-opacity-5 focus:outline-none z-10"
-          role="menu"
-          aria-orientation="vertical"
-          aria-labelledby="options-menu"
+      {/* Desktop Navigation (hidden on mobile) */}
+      <nav className="hidden md:flex space-x-6 absolute left-1/2 transform -translate-x-1/2">
+        <Link href="/about" className="text-white hover:text-amber-400">
+          About Us
+        </Link>
+        {/* <DropdownMenu /> REMOVE THIS */}
+        <Link href="/work-with-us" className="text-white hover:text-amber-400">
+          Work With Us
+        </Link>
+        <Link href="/blog" className="text-white hover:text-amber-400">
+          Blog
+        </Link>
+        <Link href="/contact" className="text-white hover:text-amber-400">
+          Contact Us
+        </Link>
+      </nav>
+
+      {/* Mobile Menu Button */}
+      <button
+        className="md:hidden text-white z-40"
+        onClick={toggleMobileMenu}
+      >
+        ☰
+      </button>
+
+      {/* Mobile Menu (hidden on desktop) */}
+      <div
+        className={`md:hidden fixed top-0 left-0 h-full w-full bg-black z-20 transition-transform duration-300 ease-in-out ${
+          isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
+        }`}
+      >
+        <button
+          className="absolute top-4 right-4 text-white text-2xl"
+          onClick={toggleMobileMenu}
         >
-          <div className="py-1" role="none">
-            <Link
-              href="/web-design"
-              className="block px-4 py-2 text-sm text-white hover:bg-gray-700"
-              role="menuitem"
-            >
-              Web Design & Development
+          &times;
+        </button>
+        <nav className="flex flex-col items-center justify-center h-full space-y-6">
+          <Link href="/about" className="text-white hover:text-amber-400 text-xl" onClick={toggleMobileMenu}>
+            About Us
+          </Link>
+            <Link href="/our-services" className="text-white hover:text-amber-400 text-xl" onClick={toggleMobileMenu}>
+                Our Services
             </Link>
-            <Link
-              href="/seo"
-              className="block px-4 py-2 text-sm text-white hover:bg-gray-700"
-              role="menuitem"
-            >
-              Search Engine Optimization
-            </Link>
-            <Link
-              href="/email-marketing"
-              className="block px-4 py-2 text-sm text-white hover:bg-gray-700"
-              role="menuitem"
-            >
-              Email and Social Media Marketing
-            </Link>
-            <Link
-              href="/branding"
-              className="block px-4 py-2 text-sm text-white hover:bg-gray-700"
-              role="menuitem"
-            >
-              Branding and Paid Media
-            </Link>
-            <Link
-              href="/it-consulting"
-              className="block px-4 py-2 text-sm text-white hover:bg-gray-700"
-              role="menuitem"
-            >
-              IT Consulting
-            </Link>
-          </div>
-        </div>
-      )}
-    </div>
+          <Link href="/work-with-us" className="text-white hover:text-amber-400 text-xl" onClick={toggleMobileMenu}>
+            Work With Us
+          </Link>
+          <Link href="/blog" className="text-white hover:text-amber-400 text-xl" onClick={toggleMobileMenu}>
+            Blog
+          </Link>
+          <Link href="/contact" className="text-white hover:text-amber-400 text-xl" onClick={toggleMobileMenu}>
+            Contact Us
+          </Link>
+        </nav>
+      </div>
+    </header>
   );
 };
 
-export default DropdownMenu;
+export default Header;
