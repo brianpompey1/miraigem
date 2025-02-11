@@ -182,9 +182,12 @@ export default function Home() {
             team is here to turn your vision into reality. Take the first
             step toward your digital future – reach out today.
             </p>
-            <button className="bg-custom-tan text-white px-8 py-3 rounded-full font-semibold hover:bg-amber-500 transition duration-300">
-            GET IN TOUCH
-            </button>
+            <Link
+            href="/contact"
+            className="bg-custom-tan text-white px-8 py-3 rounded-full font-semibold hover:bg-amber-500 transition duration-300"
+          >
+            Contact Us
+          </Link>
         </section>
         </div>
       </main>
