@@ -8,7 +8,7 @@ import Footer from "./components/Footer";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "MIRAI - Launching Soon", // Or a more general title
+  title: "MIRAI - The Future of Digital Success ", // Or a more general title
   description: "Your digital success story starts here.",
 };
 
