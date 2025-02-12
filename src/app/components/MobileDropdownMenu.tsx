@@ -20,9 +20,9 @@ const MobileDropdownMenu = () => {
         </button>
       </div>
 
-      <div
-        className={`w-full rounded-md  bg-black  focus:outline-none  ${
-          isOpen ? '' : 'hidden' // Show/hide based on isOpen
+      <div  // Corrected class application
+        className={`w-full rounded-md bg-black focus:outline-none ${
+          isOpen ? '' : 'hidden'
         }`}
         role="menu"
         aria-orientation="vertical"

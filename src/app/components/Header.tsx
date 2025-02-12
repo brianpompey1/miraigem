@@ -4,18 +4,14 @@ import Link from 'next/link';
 import Image from 'next/image';
 import DropdownMenu from './DropdownMenu';
 import { useState } from 'react';
-import MobileDropdownMenu from './MobileDropdownMenu';
-import { usePathname } from 'next/navigation'; // Import usePathname
+import MobileDropdownMenu from './MobileDropdownMenu'; // Import
 
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const pathname = usePathname(); // Get the current pathname
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
-
-  const isHomePage = pathname === '/'; // Check if it's the homepage
 
   return (
     <header className="bg-black p-4 flex items-center justify-between relative z-30">
@@ -34,8 +30,7 @@ const Header = () => {
         <Link href="/about" className="text-white hover:text-amber-400">
           About Us
         </Link>
-        {/* Conditionally render the DropdownMenu */}
-        {!isHomePage && <DropdownMenu />}
+        <DropdownMenu /> {/* Use the CORRECT DropdownMenu */}
         {/* <Link href="/work-with-us" className="text-white hover:text-amber-400">
           Work With Us
         </Link> */}
@@ -71,21 +66,7 @@ const Header = () => {
           <Link href="/about" className="text-white hover:text-amber-400 text-xl" onClick={toggleMobileMenu}>
             About Us
           </Link>
-           {/* Our Services Dropdown for Mobile */}
-            <div className="relative inline-block text-left group">
-                <Link href="/our-services" className="text-white hover:text-amber-400 inline-flex justify-center items-center w-full text-xl">
-                    Our Services
-                </Link>
-                <div className={`absolute left-0 mt-2 w-56 rounded-md shadow-lg bg-black ring-1 ring-white ring-opacity-5 focus:outline-none ${isMobileMenuOpen ? '' : 'hidden'}`}>
-                    <div className="py-1">
-                        <Link href="/web-design" className="block px-4 py-2 text-sm text-white hover:bg-gray-700" >Web Design & Development</Link>
-                        <Link href="/seo" className="block px-4 py-2 text-sm text-white hover:bg-gray-700" >Search Engine Optimization</Link>
-                        <Link href="/email-marketing" className="block px-4 py-2 text-sm text-white hover:bg-gray-700">Email and Social Media Marketing</Link>
-                        <Link href="/branding" className="block px-4 py-2 text-sm text-white hover:bg-gray-700" >Branding and Paid Media</Link>
-                        <Link href="/it-consulting" className="block px-4 py-2 text-sm text-white hover:bg-gray-700">IT Consulting</Link>
-                    </div>
-                </div>
-          </div>
+          <MobileDropdownMenu /> {/* Use the new component */}
           {/* <Link href="/work-with-us" className="text-white hover:text-amber-400 text-xl" onClick={toggleMobileMenu}>
             Work With Us
           </Link> */}
